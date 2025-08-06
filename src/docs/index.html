@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API REST de Tareas - Documentación</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .endpoint {
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .method {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: white;
+            font-size: 12px;
+        }
+        .get { background-color: #61affe; }
+        .post { background-color: #49cc90; }
+        .put { background-color: #fca130; }
+        .delete { background-color: #f93e3e; }
+        
+        pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .test-section {
+            background: #e8f5e8;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .example-response {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .status-200 { background: #d4edda; color: #155724; }
+        .status-201 { background: #d1ecf1; color: #0c5460; }
+        .status-400 { background: #f8d7da; color: #721c24; }
+        .status-404 { background: #f8d7da; color: #721c24; }
+        .status-500 { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 API REST de Tareas</h1>
+        <p><strong>Proyecto Educativo - SC-502 Ambiente WebCliente Servidor</strong></p>
+        
+        <div style="background: #e3f2fd; padding: 15px; border-radius: 5px; margin: 20px 0;">
+            <h3>📋 Información del Proyecto</h3>
+            <ul>
+                <li><strong>Base URL:</strong> http://localhost:8080/api/</li>
+                <li><strong>phpMyAdmin:</strong> http://localhost:8081/</li>
+                <li><strong>Base de Datos:</strong> MySQL 8.0</li>
+                <li><strong>Lenguaje:</strong> PHP 8.2</li>
+                <li><strong>Contenedores:</strong> Docker & Docker Compose</li>
+            </ul>
+        </div>
+
+        <h2>📝 Descripción</h2>
+        <p>Este API REST permite gestionar tareas con operaciones CRUD completas. Está diseñado para enseñar a los estudiantes:</p>
+        <ul>
+            <li>Principios de APIs REST</li>
+            <li>Métodos HTTP (GET, POST, PUT, DELETE)</li>
+            <li>Contenedorización con Docker</li>
+            <li>Conexión entre PHP y MySQL</li>
+            <li>Manejo de respuestas JSON</li>
+        </ul>
+
+        <h2>🛠 Endpoints Disponibles</h2>
+
+        <div class="endpoint">
+            <h3><span class="method get">GET</span> Obtener todas las tareas</h3>
+            <p><strong>URL:</strong> <code>/api/</code></p>
+            <p><strong>Descripción:</strong> Obtiene todas las tareas con información del usuario asignado.</p>
+            <div class="example-response">
+                <strong>Respuesta <span class="status-badge status-200">200 OK</span>:</strong>
+                <pre>{
+  "datos": [
+    {
+      "id_tarea": 1,
+      "id_usuario": 1,
+      "estado": "pendiente",
+      "titulo": "Completar proyecto final",
+      "descripcion": "Terminar el desarrollo del API REST",
+      "nombre_usuario": "Juan Pérez",
+      "email": "juan@example.com",
+      "fecha_creacion": "2025-01-15 10:30:00"
+    }
+  ],
+  "total": 1,
+  "mensaje": "Todas las tareas obtenidas"
+}</pre>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <h3><span class="method get">GET</span> Obtener tarea por ID</h3>
+            <p><strong>URL:</strong> <code>/api/{id}</code></p>
+            <p><strong>Descripción:</strong> Obtiene una tarea específica por su ID.</p>
+            <p><strong>Ejemplo:</strong> <code>/api/1</code></p>
+        </div>
+
+        <div class="endpoint">
+            <h3><span class="method get">GET</span> Filtrar tareas</h3>
+            <p><strong>URL:</strong> <code>/api/?estado={estado}</code> o <code>/api/?usuario={id_usuario}</code></p>
+            <p><strong>Descripción:</strong> Filtra tareas por estado o usuario.</p>
+            <p><strong>Ejemplos:</strong></p>
+            <ul>
+                <li><code>/api/?estado=pendiente</code></li>
+                <li><code>/api/?usuario=1</code></li>
+            </ul>
+        </div>
+
+        <div class="endpoint">
+            <h3><span class="method post">POST</span> Crear nueva tarea</h3>
+            <p><strong>URL:</strong> <code>/api/</code></p>
+            <p><strong>Descripción:</strong> Crea una nueva tarea.</p>
+            <p><strong>Cuerpo de la petición:</strong></p>
+            <pre>{
+  "id_usuario": 1,
+  "estado": "pendiente",
+  "titulo": "Nueva tarea",
+  "descripcion": "Descripción de la tarea"
+}</pre>
+            <div class="example-response">
+                <strong>Respuesta <span class="status-badge status-201">201 Created</span>:</strong>
+                <pre>{
+  "datos": {
+    "id_tarea": 6,
+    "id_usuario": 1,
+    "estado": "pendiente",
+    "titulo": "Nueva tarea",
+    "descripcion": "Descripción de la tarea",
+    "fecha_creacion": "2025-01-15 14:30:00"
+  },
+  "mensaje": "Tarea creada exitosamente"
+}</pre>
+            </div>
+        </div>
+
+        <div class="endpoint">
+            <h3><span class="method put">PUT</span> Actualizar tarea</h3>
+            <p><strong>URL:</strong> <code>/api/{id}</code></p>
+            <p><strong>Descripción:</strong> Actualiza una tarea existente.</p>
+            <p><strong>Ejemplo:</strong> <code>/api/1</code></p>
+            <p><strong>Cuerpo de la petición:</strong></p>
+            <pre>{
+  "estado": "completada",
+  "titulo": "Tarea actualizada"
+}</pre>
+        </div>
+
+        <div class="endpoint">
+            <h3><span class="method delete">DELETE</span> Eliminar tarea</h3>
+            <p><strong>URL:</strong> <code>/api/{id}</code></p>
+            <p><strong>Descripción:</strong> Elimina una tarea por su ID.</p>
+            <p><strong>Ejemplo:</strong> <code>/api/1</code></p>
+        </div>
+
+        <h2>📊 Estados Válidos</h2>
+        <ul>
+            <li><code>pendiente</code> - Tarea sin iniciar</li>
+            <li><code>en_proceso</code> - Tarea en desarrollo</li>
+            <li><code>completada</code> - Tarea finalizada</li>
+            <li><code>cancelada</code> - Tarea cancelada</li>
+        </ul>
+
+        <div class="test-section">
+            <h2>🧪 Pruebas con cURL</h2>
+            <p>Puedes probar el API usando estos comandos cURL:</p>
+            
+            <h4>Obtener todas las tareas:</h4>
+            <pre>curl -X GET http://localhost:8080/api/</pre>
+            
+            <h4>Crear una nueva tarea:</h4>
+            <pre>curl -X POST http://localhost:8080/api/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "id_usuario": 1,
+    "estado": "pendiente",
+    "titulo": "Tarea de prueba",
+    "descripcion": "Esta es una tarea de prueba"
+  }'</pre>
+            
+            <h4>Actualizar una tarea:</h4>
+            <pre>curl -X PUT http://localhost:8080/api/1 \
+  -H "Content-Type: application/json" \
+  -d '{
+    "estado": "completada"
+  }'</pre>
+            
+            <h4>Eliminar una tarea:</h4>
+            <pre>curl -X DELETE http://localhost:8080/api/1</pre>
+        </div>
+
+        <h2>🚀 Cómo ejecutar el proyecto</h2>
+        <ol>
+            <li>Asegúrate de tener Docker y Docker Compose instalados</li>
+            <li>Clona o descarga este proyecto</li>
+            <li>Abre una terminal en la carpeta del proyecto</li>
+            <li>Ejecuta: <code>docker-compose up -d</code></li>
+            <li>Espera a que los contenedores se inicien</li>
+            <li>Visita <a href="http://localhost:8080" target="_blank">http://localhost:8080</a> para ver esta documentación</li>
+            <li>Usa <a href="http://localhost:8081" target="_blank">http://localhost:8081</a> para acceder a phpMyAdmin</li>
+        </ol>
+
+        <h2>📚 Para Estudiantes</h2>
+        <p>Este proyecto te ayudará a entender:</p>
+        <ul>
+            <li><strong>REST:</strong> Cómo diseñar APIs siguiendo principios REST</li>
+            <li><strong>HTTP:</strong> Uso correcto de métodos HTTP y códigos de estado</li>
+            <li><strong>Docker:</strong> Containerización de aplicaciones web</li>
+            <li><strong>PHP:</strong> Desarrollo backend con PHP y PDO</li>
+            <li><strong>MySQL:</strong> Diseño de base de datos y relaciones</li>
+            <li><strong>JSON:</strong> Formato de intercambio de datos</li>
+        </ul>
+
+        <div style="background: #fff3cd; padding: 15px; border-radius: 5px; margin: 20px 0;">
+            <h4>💡 Consejos para el desarrollo:</h4>
+            <ul>
+                <li>Usa herramientas como Postman o Insomnia para probar el API</li>
+                <li>Revisa los logs de Docker con <code>docker-compose logs</code></li>
+                <li>Modifica el código en la carpeta <code>src/</code> y los cambios se reflejarán automáticamente</li>
+                <li>Usa phpMyAdmin para visualizar y modificar los datos de la base de datos</li>
+            </ul>
+        </div>
+
+        <footer style="text-align: center; margin-top: 40px; color: #666; border-top: 1px solid #ddd; padding-top: 20px;">
+            <p>🎓 Proyecto educativo - Universidad Fidélitas<br>
+            SC-502 Ambiente WebCliente Servidor - II Cuatrimestre 2025</p>
+        </footer>
+    </div>
+</body>
+</html>

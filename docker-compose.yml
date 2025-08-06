@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  # Servicio PHP con Apache
+  web:
+    build: .
+    container_name: tareas_api
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_NAME=tareas_db
+      - DB_USER=root
+      - DB_PASS=rootpassword
+    networks:
+      - tareas_network
+
+  # Servicio MySQL
+  db:
+    image: mysql:8.0
+    container_name: tareas_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: tareas_db
+      MYSQL_USER: api_user
+      MYSQL_PASSWORD: api_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database:/docker-entrypoint-initdb.d
+    networks:
+      - tareas_network
+
+  # phpMyAdmin para administrar la base de datos
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: tareas_phpmyadmin
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+    depends_on:
+      - db
+    networks:
+      - tareas_network
+
+volumes:
+  mysql_data:
+
+networks:
+  tareas_network:
+    driver: bridge

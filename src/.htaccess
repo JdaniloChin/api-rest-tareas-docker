@@ -1,0 +1,10 @@
+# Configuración de rutas para API REST
+RewriteEngine On
+
+# Redirigir todas las peticiones a /api hacia /api/index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^api/(.*)$ api/index.php [QSA,L]
+
+# Opcional: Redirigir la raíz hacia una página de documentación
+RewriteRule ^$ docs/index.html [L]
