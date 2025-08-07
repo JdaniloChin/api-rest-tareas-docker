@@ -17,8 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 }
 
 // Incluir archivos necesarios
-require_once 'config/database.php';
-require_once 'models/Tarea.php';
+require_once '../config/database.php';
+require_once '../models/Tarea.php';
 
 /**
  * Función para enviar respuesta JSON
